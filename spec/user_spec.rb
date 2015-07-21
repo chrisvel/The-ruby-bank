@@ -3,58 +3,76 @@ require 'user'
 
 describe User do
 
-  it "is valid with a name, email and password" do
-    user = User.new(
-      name: 'John Murdock',
-      email: 'someone@somewhere.com',
-      password: 'password',
-      password_confirmation: 'password')
+  let :user do
+    FactoryGirl.build :user
+  end
+
+  subject do
+   user
+  end
+
+  context 'is valid' do
+
+    it "with a #name, #email and #password" do
       expect(user).to be_valid
-  end
+    end
 
-  it "is valid without a name" do
-    user = User.new(
-      name: '',
-      email: 'someone@somewhere.com',
-      password: 'password',
-      password_confirmation: 'password')
+    it "without a #name" do
+      user.name = ''
       expect(user).to be_valid
+    end
+
   end
 
-  it "is invalid without an email" do
-    user = User.new(
-      name: 'John Murdock',
-      email: '',
-      password: 'password',
-      password_confirmation: 'password')
+  context 'is invalid' do
+
+    it "with a long #name" do
+      user.name = 'uriu7nbvckeuruvwuevwevih2o84o2ijeqilqievubv'
       expect(user).not_to be_valid
+    end
+
+    it "without an #email" do
+      user.email = ''
+      expect(user).not_to be_valid
+    end
+
+    it "with a very long #email" do
+      user.email =  'sfgwfgnsfjsdsdwrKWEFHWUERGUHWKERUGHWEBVKJDBVKWUHERUGHQWUKEHKVJADBKVJAKDEFKQUEUQKLIEHFLWIHROGIHWO8ROGWIRIVSLDKVLSIDHVLISDKLVJBSKJDBKVJKHDKHWQUEHKUWQHKLDJVSJDVKLSJDHVHlijldsfigoeirlgknsfknvlsfboiwoirglwirlksndkvsladhvliwhrogiwlrkgskdfnvskdflvishfoibhslfbskfnbksflbhlsfkhlb35445y3484ot83482384o8ty348t4to284ytow8yrog8fDVBAKJDBVKAUSKUGWIUERHVQIHDKLVAHKDUHVWUERHGUQVHEDKVJAKDVKQWUERHGKWUREBKVUASBDKVUAEHWQIEUHFKAUDHVCKAUDHKVUHAEKFUHAKDUVHgwefdfdfdfjekrjfgkjsfbv@sksuhfuhvsuhfvkjsbdv.dfees'
+      expect(user).not_to be_valid
+    end
+
+    it "with a wrong formatted #email" do
+      user.email =  'sf@#$@$%$^^dfjekrjfgkjsfbv@%%%%hfuhvs...d@e((es'
+      expect(user).not_to be_valid
+    end
+
+    it "without a #password" do
+      user.password = ''
+      expect(user).not_to be_valid
+    end
+
+    it "without a #password_confirmation" do
+      user.password_confirmation = ''
+      expect(user).not_to be_valid
+    end
+
+    it "without a #password and a #password_confirmation" do
+      user.password = ''
+      user.password_confirmation = ''
+      expect(user).not_to be_valid
+    end
+
+    it "if #email is already exists" do
+      user.save
+      user1 = build :user
+      user1.save
+
+      expect(user).to be_valid
+      expect(user1).to have_valid(:email)
+    end
+
   end
 
-  it "is invalid without a password" do
-    user = User.new(
-      name: 'John Murdock',
-      email: 'someone@somewhere.com',
-      password: '',
-      password_confirmation: 'password')
-      expect(user).not_to be_valid
-  end
 
-  it "is invalid without a password_confirmation" do
-    user = User.new(
-      name: 'John Murdock',
-      email: 'someone@somewhere.com',
-      password: 'password',
-      password_confirmation: '')
-      expect(user).not_to be_valid
-  end
-
-  it "is invalid without a password and a password_confirmation" do
-    user = User.new(
-      name: 'John Murdock',
-      email: 'someone@somewhere.com',
-      password: '',
-      password_confirmation: 'password')
-      expect(user).not_to be_valid
-  end
 
 end
