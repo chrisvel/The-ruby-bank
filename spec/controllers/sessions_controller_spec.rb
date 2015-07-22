@@ -25,10 +25,38 @@ describe SessionsController, :type => :controller do
 
   describe "POST #create" do
 
-    it "creates an authenticated user session" do
-      get :new
-      post :create, session: { email: user.email, password: user.password }
-      expect(session[:user_id]).to eq(user.id)
+
+    context "is valid" do
+
+      it "when creates an authenticated user session" do
+        post :create, session: { email: user.email, password: user.password }
+        expect(session[:user_id]).to eq(user.id)
+      end
+
+    end
+
+    context "is not valid" do
+
+      it "when fails to authenticate with an empty password" do
+        post :create, session: { email: user.email, password: '' }
+        expect(session[:user_id]).not_to eq(user.id)
+      end
+
+      it "when fails to authenticate with a wrong password" do
+        post :create, session: { email: user.email, password: '/@#%@#eeffs' }
+        expect(session[:user_id]).not_to eq(user.id)
+      end
+
+      it "when fails to authenticate with nil crends" do
+        post :create, session: { email: '', password: '' }
+        expect(session[:user_id]).not_to eq(user.id)
+      end
+
+      it "when fails to authenticate with wrong account" do
+        post :create, session: { email: 'me@you.com', password: 'hackme' }
+        expect(session[:user_id]).not_to eq(user.id)
+      end
+
     end
 
     it "returns http success" do
@@ -37,6 +65,15 @@ describe SessionsController, :type => :controller do
 
   end
 
+  describe "DELETE #destroy" do
 
+    it "when logs out of an authenticated user session" do
+      post :create, session: { email: user.email, password: user.password }
+      expect(session[:user_id]).to eq(user.id)
+      delete :destroy
+      expect(session[:user_id]).to be_nil
+    end
+
+  end
 
 end
