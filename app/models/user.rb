@@ -12,4 +12,6 @@ class User < ActiveRecord::Base
                     uniqueness: true
   validates :password, length: { minimum: 8 }
 
+  has_one :account
+
 end
