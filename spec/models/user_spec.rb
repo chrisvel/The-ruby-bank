@@ -82,8 +82,8 @@ describe User do
       expect(user).not_to be_valid
     end
 
-    it 'and fails to authenticate with the wrong #password' do
-      expect(user.authenticate('453t3trg')).not_to be_valid
+    it 'when authenticating with the wrong #password' do
+      expect(user.authenticate('453t3trg')).to be_falsey
     end
 
   end
