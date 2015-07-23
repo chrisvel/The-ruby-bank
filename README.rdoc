@@ -1,28 +1,15 @@
-== README
+== The ruby bank
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Assessment on Ruby on Rails
 
 Things you may want to cover:
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+OK. Build a simple rails banking app.
+OK. Via the console you can create users with password.
+OK. User can log in.
+OK. Via the console you can give the user credit.
+OK. User has a bank account with balance.
+TD. Users can transfer money to each other.
+OK. Users may not have a negative balance on their account.
+TD. We need to figure out how a user obtained a certain balance.
+TD. It is important that money cannot just disappear or appear into account.
