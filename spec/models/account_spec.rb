@@ -37,16 +37,45 @@ describe Account do
       expect(account).not_to be_valid
     end
 
-
-
   end
 
-  context ".transfer" do
+  context "transaction" do
 
-    it "allows tranfer of money between accounts" do
+    context "allows" do
 
-      transtat = transfer(:peter_account, :jack_account, 100.01)
-      expect(transtat).to be_valid
+      it "adding credit to account" do
+        after_balance = account.balance + 100.01
+        account.credit(100.01)
+        account.save
+        expect(account.balance).to eq(after_balance)
+      end
+
+      it "adding debit to account" do
+        after_balance = account.balance - 100.01
+        account.debit(100.01)
+        account.save
+        expect(account.balance).to eq(after_balance)
+      end
+
+    end
+
+    context "denies" do
+
+      it "to complete with a negative balance" do
+        account.debit(1000.01)
+        account.save
+        expect(account).not_to be_valid
+        expect(account.errors[:balance]).not_to be_nil
+        expect(account.errors[:balance]).to include("must be greater than 0")
+      end
+
+      it "to complete with wrong amount of arguments" do
+        expect{account.debit(11.000,22)}.to raise_error(ArgumentError)
+      end
+
+      it "to complete with wrong formatted balance" do
+        expect{account.debit('3rg3grwe')}.to raise_error(TypeError)
+      end
 
     end
 
