@@ -3,7 +3,10 @@ Rails.application.routes.draw do
   resources :transacts
   resources :accounts
   resources :users
-  resources :sessions
+
+  get    'login'   => 'sessions#new'
+  post   'login'   => 'sessions#create'
+  delete 'logout'  => 'sessions#destroy'
 
   root 'sessions#new'
 
