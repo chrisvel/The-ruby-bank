@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150722222417) do
+ActiveRecord::Schema.define(version: 20150723020703) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 20150722222417) do
 
   add_index "accounts", ["user_id"], name: "fk_rails_b1e30bebc8", using: :btree
 
+  create_table "transacts", force: :cascade do |t|
+    t.decimal  "amount",                 precision: 10, scale: 2
+    t.integer  "from_user_id", limit: 4,                          null: false
+    t.integer  "to_user_id",   limit: 4,                          null: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+  end
+
+  add_index "transacts", ["to_user_id"], name: "fk_rails_e4c5c1e934", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "name",            limit: 255
     t.string   "email",           limit: 255
@@ -32,4 +42,5 @@ ActiveRecord::Schema.define(version: 20150722222417) do
   end
 
   add_foreign_key "accounts", "users"
+  add_foreign_key "transacts", "users", column: "to_user_id"
 end

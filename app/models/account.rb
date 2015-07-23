@@ -6,6 +6,8 @@ class Account < ActiveRecord::Base
   validates :balance, presence: true, :numericality => { :greater_than => 0 }
   validates :user_id, presence: true
 
+  # to make private
+
   def debit(amount)
     self.balance -= amount
   end

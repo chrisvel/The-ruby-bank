@@ -1,15 +1,14 @@
 Rails.application.routes.draw do
-<<<<<<< HEAD
+
+
+  resources :transacts
   resources :accounts
-=======
-  #get 'sessions/new'
 
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
->>>>>>> log-in
-  resources :users
 
+  resources :users
   root 'sessions#new'
 
   # The priority is based upon order of creation: first created -> highest priority.
