@@ -3,9 +3,7 @@ require 'user'
 
 describe User do
 
-  let :user do
-    FactoryGirl.build :user
-  end
+  let(:user){ FactoryGirl.create :user }
 
   subject do
    user
