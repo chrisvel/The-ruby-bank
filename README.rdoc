@@ -9,7 +9,7 @@ Things needed to be covered:
 * OK. User can log in.
 * OK. Via the console you can give the user credit.
 * OK. User has a bank account with balance.
-* TD. Users can transfer money to each other.
+* OK. Users can transfer money to each other.
 * OK. Users may not have a negative balance on their account.
 * TD. We need to figure out how a user obtained a certain balance.
-* TD. It is important that money cannot just disappear or appear into account.
+* OK. It is important that money cannot just disappear or appear into account.
