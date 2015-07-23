@@ -4,7 +4,7 @@ class Account < ActiveRecord::Base
 
   validates :name, presence: true, length: { maximum: 250 }
   validates :balance, presence: true, :numericality => { :greater_than => 0 }
-  validates :user_id, presence: true
+  # validates :user_id, presence: true
 
   # to make private
 

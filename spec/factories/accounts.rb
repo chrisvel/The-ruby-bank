@@ -1,7 +1,7 @@
 FactoryGirl.define do
 
   factory :account, class: Account do
-    association :user, factory: :user
+    #association :user, factory: :user
     id 1
     name "Emergency fund"
     balance "199.99"
@@ -10,7 +10,7 @@ FactoryGirl.define do
   end
 
   factory :peter_account, class: Account do
-    association :user, factory: :peter
+    #association :user, factory: :peter
     id 2
     name "Checking acc"
     balance "200.5"
@@ -19,7 +19,7 @@ FactoryGirl.define do
   end
 
   factory :jack_account, class: Account do
-    association :user, factory: :jack
+    #association :user, factory: :jack
     id 3
     name "My Savings account"
     balance "500.96"

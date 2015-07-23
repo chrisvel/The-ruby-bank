@@ -26,15 +26,14 @@ class TransactsController < ApplicationController
   def create
     @transact = Transact.new(transact_params)
 
-    puts "*"*50
-    puts Account.count
-    puts "*"*50
-
-    puts params.inspect
     @from_user = User.find_by(id: params[:transact][:from_user_id])
-
     @to_user = User.find_by(id: params[:transact][:to_user_id])
-    amount = params[:transact][:amount]
+    amount = params[:transact][:amount].to_d
+
+    puts "*"*50
+    puts "from: #{@from_user.name}, #{@from_user.account.balance}"
+    puts "from: #{@to_user.name}, #{@to_user.account.balance}"
+    puts "*"*50
 
     ActiveRecord::Base.transaction do
       @from_user.account.debit(amount)
@@ -44,13 +43,19 @@ class TransactsController < ApplicationController
       @transact.save
     end
 
+    puts "*"*50
+    puts "from: #{@from_user.name}, #{@from_user.account.balance}"
+    puts "from: #{@to_user.name}, #{@to_user.account.balance}"
+    puts "*"*50
+    puts "transact: #{@transact.inspect}"
+
     respond_to do |format|
       if @transact.save
         format.html { redirect_to @transact, notice: 'Transact was successfully created.' }
-        format.json { render :show, status: :created, location: @transact }
+        # format.json { render :show, status: :created, location: @transact }
       else
         format.html { render :new }
-        format.json { render json: @transact.errors, status: :unprocessable_entity }
+        # format.json { render json: @transact.errors, status: :unprocessable_entity }
       end
     end
   end

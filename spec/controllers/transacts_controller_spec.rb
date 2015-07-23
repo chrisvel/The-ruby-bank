@@ -9,9 +9,8 @@ describe TransactsController, :type => :controller do
     context "is valid" do
 
       it "when transferring funds" do
-        # puts peter_account.inspect
         post :create, transact: transact.attributes
-        expect(response).to have_http_status(:ok)
+        expect(response).to redirect_to("/transacts/#{assigns(:transact).id}")
       end
 
     end

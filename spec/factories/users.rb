@@ -8,6 +8,7 @@ FactoryGirl.define do
     password_confirmation '12345678'
     created_at 2.days.ago
     updated_at 1.minute.ago
+    association :account, factory: :account
   end
 
   factory :peter, class: User do
@@ -16,6 +17,7 @@ FactoryGirl.define do
     email 'pflorrick@tgw.com'
     password 'password'
     password_confirmation 'password'
+    association :account, factory: :peter_account
   end
 
   factory :jack, class: User do
@@ -24,6 +26,7 @@ FactoryGirl.define do
     email 'jack.b@ctu.com'
     password '12qw12qw12'
     password_confirmation '12qw12qw12'
+    association :account, factory: :jack_account
   end
 
 end
