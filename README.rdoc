@@ -2,7 +2,7 @@
 
 Assessment on Ruby on Rails
 
-Things you may want to cover:
+Things needed to be covered:
 
 * OK. Build a simple rails banking app.
 * OK. Via the console you can create users with password.
