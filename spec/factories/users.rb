@@ -1,6 +1,7 @@
 FactoryGirl.define do
 
   factory :user, class: User do
+    id 1
     name 'John Murdock'
     email 'someone@somewhere.com'
     password '12345678'
@@ -8,6 +9,7 @@ FactoryGirl.define do
   end
 
   factory :peter, class: User do
+    id 2
     name 'Peter Florrick'
     email 'pflorrick@tgw.com'
     password 'password'
@@ -15,6 +17,7 @@ FactoryGirl.define do
   end
 
   factory :jack, class: User do
+    id 3
     name 'Jack Bauer'
     email 'jack.b@ctu.com'
     password '12qw12qw12'
