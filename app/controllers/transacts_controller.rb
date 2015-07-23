@@ -26,6 +26,24 @@ class TransactsController < ApplicationController
   def create
     @transact = Transact.new(transact_params)
 
+    puts "*"*50
+    puts Account.count
+    puts "*"*50
+
+    puts params.inspect
+    @from_user = User.find_by(id: params[:transact][:from_user_id])
+
+    @to_user = User.find_by(id: params[:transact][:to_user_id])
+    amount = params[:transact][:amount]
+
+    ActiveRecord::Base.transaction do
+      @from_user.account.debit(amount)
+      @to_user.account.credit(amount)
+      @from_user.account.save
+      @to_user.account.save
+      @transact.save
+    end
+
     respond_to do |format|
       if @transact.save
         format.html { redirect_to @transact, notice: 'Transact was successfully created.' }
@@ -40,6 +58,7 @@ class TransactsController < ApplicationController
   # PATCH/PUT /transacts/1
   # PATCH/PUT /transacts/1.json
   def update
+
     respond_to do |format|
       if @transact.update(transact_params)
         format.html { redirect_to @transact, notice: 'Transact was successfully updated.' }
