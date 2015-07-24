@@ -7,8 +7,7 @@ describe Transact do
   let(:jack){ FactoryGirl.create :jack }
   let(:peter){ FactoryGirl.create :peter }
 
-  let(:peter_account) { FactoryGirl.create :peter_account }
-  let(:jack_account) { FactoryGirl.create :jack_account }
+
 
   let(:transact){ FactoryGirl.create :transact }
 
@@ -24,24 +23,24 @@ describe Transact do
 
       puts "*"*30
       puts "BEFORE"
-      puts "Peter's account: #{peter_account.balance}"
-      puts "Jack's account: #{jack_account.balance}"
+      puts "Peter's account: #{peter.account.balance}"
+      puts "Jack's account: #{jack.account.balance}"
       puts "Amount: #{amount}"
       puts "-"*30
 
-      peter_account.debit(amount)
-      jack_account.credit(amount)
-      peter_account.save
-      jack_account.save
-      transact.from_user = peter_account.user
-      transact.to_user = jack_account.user
+      peter.account.debit(amount)
+      jack.account.credit(amount)
+      peter.account.save
+      jack.account.save
+      transact.from_user = peter
+      transact.to_user = jack
       transact.amount = amount
       transact.save
 
       puts "*"*30
       puts "AFTER"
-      puts "Peter's account: #{peter_account.balance}"
-      puts "Jack's account: #{jack_account.balance}"
+      puts "Peter's account: #{peter.account.balance}"
+      puts "Jack's account: #{jack.account.balance}"
       puts "-"*30
 
       expect(transact).to be_valid
