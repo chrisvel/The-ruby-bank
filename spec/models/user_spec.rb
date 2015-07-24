@@ -5,10 +5,6 @@ describe User do
 
   let(:user){ FactoryGirl.create :user }
 
-  subject do
-   user
-  end
-
   context 'is valid' do
 
     it 'with a .name, .email and .password' do
@@ -70,8 +66,8 @@ describe User do
       user1 = FactoryGirl.build :user
       user1.save
 
+      expect(user).to be_valid
       expect(user1).not_to be_valid
-
     end
 
     it 'when .password is too short' do

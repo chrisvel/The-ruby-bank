@@ -3,11 +3,14 @@ require 'transact'
 
 describe Transact do
 
+  let(:user){ FactoryGirl.create :user }
+  let(:jack){ FactoryGirl.create :jack }
+  let(:peter){ FactoryGirl.create :peter }
+
   let(:peter_account) { FactoryGirl.create :peter_account }
   let(:jack_account) { FactoryGirl.create :jack_account }
 
   let(:transact){ FactoryGirl.create :transact }
-
 
   context "is valid" do
 

@@ -32,11 +32,6 @@ describe Account do
       expect(account).not_to be_valid
     end
 
-    it 'without a #user_id' do
-      account.user_id = ''
-      expect(account).not_to be_valid
-    end
-
   end
 
   context "transaction" do
