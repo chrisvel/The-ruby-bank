@@ -15,6 +15,7 @@ class TransactsController < ApplicationController
   # GET /transacts/new
   def new
     @transact = Transact.new
+    @users = User.all
   end
 
   # GET /transacts/1/edit
@@ -30,31 +31,25 @@ class TransactsController < ApplicationController
     @to_user = User.find_by(id: params[:transact][:to_user_id])
     amount = params[:transact][:amount].to_d
 
-    puts "*"*50
-    puts "from: #{@from_user.name}, #{@from_user.account.balance}"
-    puts "from: #{@to_user.name}, #{@to_user.account.balance}"
-    puts "*"*50
-
-    ActiveRecord::Base.transaction do
-      @from_user.account.debit(amount)
-      @to_user.account.credit(amount)
-      @from_user.account.save
-      @to_user.account.save
-      @transact.save
+    if @from_user.account.balance > amount
+      Account.transaction do
+        @from_user.account.debit(amount)
+        @to_user.account.credit(amount)
+        @from_user.account.save
+        @to_user.account.save
+        @transact.save
+        @transact_success = true
+      end
+    else
+      @transact_success = false
     end
 
-    puts "*"*50
-    puts "from: #{@from_user.name}, #{@from_user.account.balance}"
-    puts "from: #{@to_user.name}, #{@to_user.account.balance}"
-    puts "*"*50
-    puts "transact: #{@transact.inspect}"
-
     respond_to do |format|
-      if @transact.save
+      if @transact_success
         format.html { redirect_to @transact, notice: 'Transact was successfully created.' }
         # format.json { render :show, status: :created, location: @transact }
       else
-        format.html { render :new }
+        format.html { redirect_to transacts_path, notice: 'Transact failed, balance not sufficient.' }
         # format.json { render json: @transact.errors, status: :unprocessable_entity }
       end
     end

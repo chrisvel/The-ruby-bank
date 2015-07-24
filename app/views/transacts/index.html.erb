@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>Date</th>
       <th>Amount</th>
       <th>From user</th>
       <th>To user</th>
@@ -15,12 +16,11 @@
   <tbody>
     <% @transacts.each do |transact| %>
       <tr>
+        <td><%= transact.created_at %></td>
         <td><%= transact.amount %></td>
         <td><%= transact.from_user_id %></td>
         <td><%= transact.to_user_id %></td>
         <td><%= link_to 'Show', transact %></td>
-        <td><%= link_to 'Edit', edit_transact_path(transact) %></td>
-        <td><%= link_to 'Destroy', transact, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -29,3 +29,4 @@
 <br>
 
 <%= link_to 'New Transact', new_transact_path %>
+<%= link_to 'Users', users_path %>
